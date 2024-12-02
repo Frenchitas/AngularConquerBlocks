@@ -12,6 +12,7 @@ export class AuthService {
   http: HttpClient = inject(HttpClient);
 
   login(user: AuthData): Observable<string> {
-    return this.http.post<LoginResponse>(`${this.baseUrl}/login`, user).pipe(map(AuthAdapter));
+    return this.http.post<LoginResponse>(`${this.baseUrl}/login`, user)
+    .pipe(map(AuthAdapter));
   }
 }
