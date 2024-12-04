@@ -1,7 +1,9 @@
-import { CustomImputComponent } from '@/app/components';
+import { appRoutes } from '@/app/app.routes';
+import { CustomInputComponent } from '@/app/components';
 import { AuthService } from '@/app/services';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 
 interface LoginForm {
@@ -12,13 +14,14 @@ interface LoginForm {
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, CustomImputComponent],
+  imports: [ReactiveFormsModule, CustomInputComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent {
   authService = inject(AuthService)
+  route = inject(Router)
 
   loginForm = new FormGroup<LoginForm>({
     email: new FormControl('', {
@@ -36,6 +39,9 @@ export class LoginComponent {
       try {
         await firstValueFrom(this.authService
           .login(this.loginForm.getRawValue()));
+          this.route.navigate([appRoutes.public.login], 
+            { replaceUrl: true });
+
       } catch (error) {
         console.error(error)
       }

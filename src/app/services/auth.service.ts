@@ -18,4 +18,9 @@ export class AuthService {
     .pipe(
       map(AuthAdapter));
   }
+
+  register(user: AuthData): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/register`, 
+      user);
+  }
 }

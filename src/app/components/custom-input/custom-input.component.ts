@@ -8,7 +8,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
   styleUrl: './custom-input.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CustomImputComponent {
+export class CustomInputComponent {
   control = input.required<FormControl>();
   label = input.required<string>();
   type = input.required<string>();
