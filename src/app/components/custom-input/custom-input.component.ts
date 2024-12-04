@@ -4,8 +4,8 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 @Component({
   selector: 'app-custom-input',
   imports: [ReactiveFormsModule],
-  templateUrl: './custom-imput.component.html',
-  styleUrl: './custom-imput.component.scss',
+  templateUrl: './custom-input.component.html',
+  styleUrl: './custom-input.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CustomImputComponent {

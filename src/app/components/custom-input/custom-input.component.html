@@ -9,7 +9,8 @@
       [attr.placeholder]="placeholder()"
     />
   
-    @if (controlLocal !== null && controlLocal.invalid && controlLocal.touched) 
+    @if (controlLocal !== null && controlLocal.invalid && 
+    controlLocal.touched) 
     {
      <small class="error">{{ errorMessage() }}</small>
     }

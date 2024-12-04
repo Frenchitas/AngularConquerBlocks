@@ -1,1 +1,1 @@
-export * from './custom-imput/custom-imput.component'
+export * from './custom-input/custom-input.component'
