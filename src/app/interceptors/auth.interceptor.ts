@@ -21,5 +21,25 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   const authReq = req.clone({ headers });
 
-  return next(authReq);
+  return next(authReq).pipe(
+    catchError((error: HttpErrorResponse) => {
+      if (error.status === 401 || error.status === 403) {
+        return authService.refreshToken().pipe(
+          switchMap((newToken: string) => {
+            localManager.setElement(LocalKeys.accessToken, newToken);
+
+            const updatedHeaders = req.headers.set(
+              'Authorization',
+              `Bearer ${newToken}`
+            );
+
+            const newRequest = req.clone({ headers: updatedHeaders });
+
+            return next(newRequest);
+          }),
+        );
+      }
+      return throwError(() => error);
+    })
+  );
 };

@@ -1,7 +1,7 @@
-import { appRoutes } from '@/app/app.routes';
+import { appRoutes } from '../../../app.routes';
 import { CustomInputComponent } from '@/app/components';
-import { AuthService } from '@/app/services';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { AuthService, LocalManagerService } from '@/app/services';
+import { afterNextRender, ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
@@ -21,7 +21,8 @@ interface LoginForm {
 })
 export class LoginComponent {
   authService = inject(AuthService)
-  route = inject(Router)
+  private localManager = inject(LocalManagerService)
+  router = inject(Router)
 
   loginForm = new FormGroup<LoginForm>({
     email: new FormControl('', {
@@ -34,14 +35,17 @@ export class LoginComponent {
     })
   })
 
+  constructor() {
+    afterNextRender(() => {
+      this.localManager.clearStorage()
+    })
+  }
+
   async onSubmit() {
     if (this.loginForm.valid) {
       try {
-        await firstValueFrom(this.authService
-          .login(this.loginForm.getRawValue()));
-          this.route.navigate([appRoutes.public.login], 
-            { replaceUrl: true });
-
+        await firstValueFrom(this.authService.login(this.loginForm.getRawValue()));
+        this.router.navigate([`${appRoutes.private.root}/${appRoutes.private.characters}`], { replaceUrl: true });
       } catch (error) {
         console.error(error)
       }

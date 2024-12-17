@@ -1,5 +1,6 @@
 export interface TokenContainer {
-    token: string;
+    accessToken: string;
+    refreshToken: string;
 }
 
 export interface LoginResponse extends TokenContainer{}

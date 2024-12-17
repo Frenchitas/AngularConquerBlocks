@@ -33,19 +33,6 @@ export const routes: Routes = [
           import('./public/components/register/register.component').then(
             (m) => m.RegisterComponent,
           ),
-    },
-    {
-        path: appRoutes.private.root,
-        //loadChildren: () =>
-          //import('./private/private.routes').then((m) => m.routes),
-      },
-      {
-        path: appRoutes.public.notFound,
-        //loadComponent: () =>
-          //import('./components/not-found/not-found.component').then(
-            //(m) => m.NotFoundComponent,
-          //),
-      },
-      { path: '**', redirectTo: appRoutes.public.notFound },
+    }
     ];
 
